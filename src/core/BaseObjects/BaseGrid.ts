@@ -163,6 +163,7 @@ export class GameGrid {
       if (gameObj) {
         gameObj.position.set(cube.position.x, GAME_GRID_CONFIG.GAME_OBJECT_Y, cube.position.z);
         this.gridGroup.add(gameObj);
+        cube.userData.placedObject = gameObj;
       }
     }
   }
@@ -261,18 +262,18 @@ export class GameGrid {
       const itemManager = ItemManager.getInstance();
       if (itemManager.selectedItem) {
         const gameObj = this.sceneManager.handleMouseClick(itemManager.selectedItem);
-if (gameObj) {
-  tweenScaleTO(gameObj, 0.3, 1);
-  gameObj.position.set(cube.position.x, GAME_GRID_CONFIG.GAME_OBJECT_Y + 20, cube.position.z);
-  this.gridGroup.add(gameObj);
-  gsap.to(gameObj.position, {
-    y: GAME_GRID_CONFIG.GAME_OBJECT_Y,
-    duration: 0.6,
-    ease: 'bounce.out',
-  });
-  // Store reference to the placed object
-  cube.userData.placedObject = gameObj;
-}
+        if (gameObj) {
+          tweenScaleTO(gameObj, 0.3, 1);
+          gameObj.position.set(cube.position.x, GAME_GRID_CONFIG.GAME_OBJECT_Y + 20, cube.position.z);
+          this.gridGroup.add(gameObj);
+          gsap.to(gameObj.position, {
+            y: GAME_GRID_CONFIG.GAME_OBJECT_Y,
+            duration: 0.6,
+            ease: 'bounce.out',
+          });
+          // Store reference to the placed object
+          cube.userData.placedObject = gameObj;
+        }
 
       } else {
         cube.userData.selected = false;
